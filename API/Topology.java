@@ -29,10 +29,18 @@ public class Topology {
 
     void setComponents(List<Component> components) {
         Map<String, String> netlist;
-        int maxval, minval, defval;
+        Double maxval, minval, defval;
         String id;
         for (int i = 0; i < components.size(); i++) {
+            maxval = components.get(i).getMax();
+            minval = components.get(i).getMin();
+            defval = components.get(i).getDefValue();
+            netlist = components.get(i).getNetList();
             id = components.get(i).getId();
+            if (components.get(i) instanceof Nmos) {
+                components.add(new Nmos(id, minval, maxval, netlist, defval));
+            } else
+                components.add(new Resistor(id, netlist, minval, maxval, defval));
 
         }
     }
@@ -40,6 +48,7 @@ public class Topology {
     List<Component> getComponents() {
         return components;
     }
+
 
 
 //    public static void main(String[] args) throws IOException, ParseException {

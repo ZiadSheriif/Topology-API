@@ -2,8 +2,8 @@ package API;
 
 import java.util.Map;
 
-public class TerminalNodes extends Component {
-    TerminalNodes(String id, Double minValue, Double maxValue, Map<String, String> netList,Double defVal) {
+public class ResistorTerminals extends Component {
+    ResistorTerminals(String id, Double minValue, Double maxValue, Map<String, String> netList, Double defVal) {
         super(id,minValue,maxValue,defVal,netList);
     }
 
