@@ -7,8 +7,12 @@ public class Component {
     protected double minValue, maxValue, deValue;
     protected Map<String, String> netList;
 
-    Component(String id, Double minValue, Double maxValue, Map<String, String> netList) {
-
+    Component(String id, Double minValue, Double maxValue,Double defVal, Map<String, String> netList) {
+        this.id = id;
+        this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.netList = netList;
+        this.deValue=defVal;
     }
 
     //TODO: Setters and getters of Components Class
