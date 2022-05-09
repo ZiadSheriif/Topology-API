@@ -30,9 +30,18 @@ public class Topologies {
             System.out.println(" Topology With ID " + id + "has been Failed to be Deleted   \n");
     }
 
-    List<Component> getDevices(String id) {
+    List<Component> getConntectedDevices(String node, String topId) {
         for (Topology topology : topologies) {
-            if (topology.getId() == id) {
+            if (topology.getId().equals(topId)) {
+                return topology.getConnectedComponents(node);
+            }
+        }
+        return null;
+    }
+
+    List<Component> getDevices(String topId) {
+        for (Topology topology : topologies) {
+            if (topology.getId() == topId) {
                 return topology.getComponents();
             }
         }

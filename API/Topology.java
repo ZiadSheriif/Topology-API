@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.ls.LSException;
 
 import java.awt.*;
 import java.io.*;
@@ -16,14 +17,15 @@ public class Topology {
     private static List<Component> components;
 
     Topology(String id, List<Component> components) {
-
+        this.id = id;
+        setComponents(components);
     }
 
     void setId(String id) {
         this.id = id;
     }
 
-    String getId() {
+    final String getId() {
         return id;
     }
 
@@ -45,10 +47,21 @@ public class Topology {
         }
     }
 
-    List<Component> getComponents() {
+    final List<Component> getComponents() {
         return components;
     }
 
+    final List<Component> getConnectedComponents(String node) {
+        List<Component> dummyComponents = null;
+        for (Component component : components) {
+            HashMap<String, String> tempNetList = (HashMap<String, String>) component.getNetList();
+            for (String word : tempNetList.values()) {
+                if (word.equals(node))
+                    dummyComponents.add(component);
+            }
+        }
+        return dummyComponents;
+    }
 
 
 //    public static void main(String[] args) throws IOException, ParseException {
