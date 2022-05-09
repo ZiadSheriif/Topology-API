@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Component {
     protected String id, type;
-    protected double minValue, maxValue, deValue;
+    protected double minValue, maxValue, defValue;
     protected Map<String, String> netList;
 
     Component(String id, Double minValue, Double maxValue,Double defVal, Map<String, String> netList) {
@@ -12,7 +12,7 @@ public class Component {
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.netList = netList;
-        this.deValue=defVal;
+        this.defValue=defVal;
     }
 
     //TODO: Setters and getters of Components Class
@@ -41,7 +41,7 @@ public class Component {
     }
 
     void setDefValue(Double defValue) {
-        this.deValue = deValue;
+        this.defValue = defValue;
     }
 
 
@@ -67,6 +67,6 @@ public class Component {
     }
 
     final Double getDefValue() {
-        return deValue;
+        return defValue;
     }
 }

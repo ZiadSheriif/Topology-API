@@ -45,7 +45,9 @@ public class main {
     private static void readJson() throws IOException, ParseException {
         System.out.println("File Name: ");
         Scanner input = new Scanner(System.in);
-        topologies.readJSON(input.next());
+        Topology topology=topologies.readJSON(input.next());
+        System.out.println("hereee");
+        System.out.println(topology.getComponents().get(0));
 
     }
     private static void writeJson() throws IOException {

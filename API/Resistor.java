@@ -7,7 +7,7 @@ import java.util.Map;
         super(id, minVal, maxVal, netlistR, defVal);
     }
 
-    void setResistor() {
+    void setType() {
         type = "resistor";
     }
 }

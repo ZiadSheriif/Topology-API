@@ -7,8 +7,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Topologies {
     private List<Topology> topologies;
@@ -59,13 +58,40 @@ public class Topologies {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(fileName));
         JSONObject jsonObject = (JSONObject) obj;
-        String id = (String) jsonObject.get("id");
-        List<Component> components = (List<Component>) jsonObject.get("components");
-        for (Component component : components) {
-            components.add(component);
-        }
-        return new Topology(id, components);
 
+        String topId = (String) jsonObject.get("id");
+        List<JSONObject> arrOfComponents = (List<JSONObject>) jsonObject.get("components");
+
+        List<Component> components = null;
+        for (int i = 0; i < arrOfComponents.size(); i++) {
+            components.add(createComponent((List<JSONObject>) jsonObject.get("components"), i));
+        }
+        Topology topo= new Topology(topId, components);
+        return topo;
+
+    }
+
+    Component createComponent(List<JSONObject> components, int index) {
+        Double mx, mn, defVal;
+        String id, type;
+        Component comp;
+        type = (String) components.get(index).get("type");
+        id = (String) components.get(index).get("id");
+//        System.out.println(type + "  " + id);
+        if (type.equals("resistor")) {
+            JSONObject device1 = (JSONObject) components.get(index).get("resistance");
+            mn = Double.parseDouble(device1.get("min").toString());
+            mx = Double.parseDouble(device1.get("max").toString());
+            defVal = Double.parseDouble(device1.get("default").toString());
+            comp = new Resistor(id, (Map<String, String>) components.get(index).get("netlist"), mn, mx, defVal);
+        } else {
+            JSONObject device2 = (JSONObject) components.get(index).get("m(1)");
+            mn = Double.parseDouble(device2.get("min").toString());
+            mx = Double.parseDouble(device2.get("max").toString());
+            defVal = Double.parseDouble(device2.get("default").toString());
+            comp = new Nmos(id, mn, mn, (Map<String, String>) components.get(index).get("netlist"), defVal);
+        }
+        return comp;
     }
 
     void writeJSON(String topId, String fileName) throws IOException {

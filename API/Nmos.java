@@ -7,7 +7,7 @@ class Nmos extends MosTerminals {
         super(id, minValue, maxValue, netList, defVal);
     }
 
-    void setNoms() {
+    void setType() {
         type = "nmos";
     }
 
