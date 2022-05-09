@@ -11,7 +11,7 @@ import java.util.List;
 
 public class main {
     public static void main(String[] args) {
-
+        System.out.println("allah");
     }
 
     Topology readJSON(String fileName) throws IOException, ParseException {
