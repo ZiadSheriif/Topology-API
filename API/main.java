@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.List;
 
 public class main {
-    static Topologies topologies = new Topologies();
+    private static Topologies topos = new Topologies();
 
     public static void main(String[] args) throws IOException, ParseException {
 
@@ -41,31 +41,36 @@ public class main {
             }
         }
     }
+
     // TODO: handle case if empty
     private static void readJson() throws IOException, ParseException {
         System.out.println("File Name: ");
         Scanner input = new Scanner(System.in);
-        Topology topology=topologies.readJSON(input.next());
-        System.out.println("hereee");
-        System.out.println(topology.getComponents().get(0));
+        Topology topology = topos.readJSON(input.next());
+        if (!topology.getId().isEmpty()) {
+            System.out.println("Read Successfully");
+            topos.insertTopology(topology);
+            System.out.println(topos.getTopologies().size());
+        }
 
     }
+
     private static void writeJson() throws IOException {
         System.out.println("Topology ID: ");
         Scanner input1 = new Scanner(System.in);
         System.out.println("File Name: ");
         Scanner input2 = new Scanner(System.in);
-        topologies.writeJSON(input1.next(), input2.next());
+        topos.writeJSON(input1.next(), input2.next());
     }
 
     private static void printTopologies() {
-        topologies.printTopologiesID();
+        topos.printTopologiesID();
     }
 
     private static void deleteTopology() {
         System.out.println("Topology ID: ");
         Scanner input = new Scanner(System.in);
-        topologies.deleteTopology(input.next());
+        topos.deleteTopology(input.next());
     }
 
 }

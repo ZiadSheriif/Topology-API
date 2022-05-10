@@ -10,33 +10,40 @@ import java.io.IOException;
 import java.util.*;
 
 public class Topologies {
-    private List<Topology> topologies;
+    private final List<Topology> topologies = new ArrayList<>();
 
 
     final List<Topology> getTopologies() {
         return topologies;
     }
 
-    void insertToplogy(Topology topology) {
+    void insertTopology(Topology topology) {
+//        System.out.println(topologies);
+        for (Topology topo : topologies) {
+            if (topo.getId().equals(topology.getId())) {
+//                System.out.println("Found");
+                return;
+            }
+        }
         topologies.add(topology);
     }
 
     void deleteTopology(String id) {
         boolean done = false;
         for (Topology topology : topologies) {
-            if (topology.getId() == id) {
+            if (topology.getId().equals(id)) {
                 topologies.remove(topology);
                 done = true;
                 break;
             }
         }
         if (done)
-            System.out.println(" Topology With ID " + id + "has been Deleted Successfully\n");
+            System.out.println("Topology With ID " + id + " has been Deleted Successfully\n");
         else
-            System.out.println(" Topology With ID " + id + "has been Failed to be Deleted   \n");
+            System.out.println("Topology With ID " + id + " has been Failed to be Deleted\n");
     }
 
-    List<Component> getConntectedDevices(String node, String topId) {
+    List<Component> getConnectedDevices(String node, String topId) {
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
                 return topology.getConnectedComponents(node);
@@ -47,7 +54,7 @@ public class Topologies {
 
     List<Component> getDevices(String topId) {
         for (Topology topology : topologies) {
-            if (topology.getId() == topId) {
+            if (topology.getId().equals(topId)) {
                 return topology.getComponents();
             }
         }
@@ -61,12 +68,16 @@ public class Topologies {
 
         String topId = (String) jsonObject.get("id");
         List<JSONObject> arrOfComponents = (List<JSONObject>) jsonObject.get("components");
-
-        List<Component> components = null;
-        for (int i = 0; i < arrOfComponents.size(); i++) {
-            components.add(createComponent((List<JSONObject>) jsonObject.get("components"), i));
+        int n = arrOfComponents.size();
+        List<Component> components = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+//            System.out.println(topId);
+//            System.out.println(arrOfComponents.get(i));
+            components.add(createComponent(arrOfComponents, i));
         }
-        Topology topo= new Topology(topId, components);
+//        System.out.println(components.size());
+        Topology topo = new Topology(topId, components);
+//        System.out.println(topologies.size());
         return topo;
 
     }
@@ -85,11 +96,11 @@ public class Topologies {
             defVal = Double.parseDouble(device1.get("default").toString());
             comp = new Resistor(id, (Map<String, String>) components.get(index).get("netlist"), mn, mx, defVal);
         } else {
-            JSONObject device2 = (JSONObject) components.get(index).get("m(1)");
+            JSONObject device2 = (JSONObject) components.get(index).get("m(l)");
             mn = Double.parseDouble(device2.get("min").toString());
             mx = Double.parseDouble(device2.get("max").toString());
             defVal = Double.parseDouble(device2.get("default").toString());
-            comp = new Nmos(id, mn, mn, (Map<String, String>) components.get(index).get("netlist"), defVal);
+            comp = new Nmos(id, mn, mx, (Map<String, String>) components.get(index).get("netlist"), defVal);
         }
         return comp;
     }
@@ -117,5 +128,6 @@ public class Topologies {
             System.out.print(topology.getId() + " ");
         }
         System.out.println();
+
     }
 }

@@ -13,12 +13,17 @@ import java.util.List;
 
 public class Topology {
 
-    private static String id;
-    private static List<Component> components;
+    private  String id;
+    private List<Component> components;
 
-    Topology(String id, List<Component> components) {
+    Topology(String id) {
         this.id = id;
-        setComponents(components);
+    }
+
+    Topology(String id, List<Component> componentss) {
+        this.id = id;
+        setComponents(componentss);
+
     }
 
     void setId(String id) {
@@ -29,11 +34,12 @@ public class Topology {
         return id;
     }
 
-    void setComponents(List<Component> components) {
+    void setComponents(final List<Component> components) {
         Map<String, String> netlist;
         Double maxval, minval, defval;
         String id;
-        for (int i = 0; i < components.size(); i++) {
+        int size = components.size();
+        for (int i = 0; i < size; i++) {
             maxval = components.get(i).getMax();
             minval = components.get(i).getMin();
             defval = components.get(i).getDefValue();
