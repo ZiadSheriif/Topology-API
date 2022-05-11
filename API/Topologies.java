@@ -50,13 +50,22 @@ public class Topologies {
         return null;
     }
 
-    List<Component> getDevices(String topId) {
+    List<HashMap<String, String>> getDevices(String topId) {
+        List<Component> comps = null;
+        List<HashMap<String, String>> device = new ArrayList<>();
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                return topology.getComponents();
+                comps = topology.getComponents();
+                for (Component component : comps) {
+                    HashMap<String, String> dummy = new HashMap<>();
+                    dummy.put("type", component.getType());
+                    dummy.put("id", component.getId());
+                    device.add(dummy);
+                }
+                break;
             }
         }
-        return null;
+        return device;
     }
 
     Topology readJSON(String fileName) throws IOException, ParseException {
@@ -69,7 +78,7 @@ public class Topologies {
         int n = arrOfComponents.size();
         List<Component> components = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            System.out.println(arrOfComponents.get(i));
+//            System.out.println(arrOfComponents.get(i));
             components.add(createComponent(arrOfComponents, i));
         }
         Topology topo = new Topology(topId, components);
@@ -107,7 +116,6 @@ public class Topologies {
         // get id and getting each component in component list and convert it to string
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                System.out.println(topology.getComponents().get(0).getType());
                 json.put(topId, convertComponentsToJson(topology.getComponents()));
                 break;
             }

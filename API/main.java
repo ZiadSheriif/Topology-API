@@ -34,7 +34,9 @@ public class main {
                 case 2 -> writeJson();
                 case 3 -> printTopologies();
                 case 4 -> deleteTopology();
-                case 5 -> {
+                case 5 -> getQueryDevices();
+                case 6 -> getDevicesWithNetlistNode();
+                case 7 -> {
                     return;
                 }
                 default -> System.out.println("Invalid input");
@@ -56,11 +58,13 @@ public class main {
     }
 
     private static void writeJson() throws IOException {
-        System.out.println("Topology ID: ");
-        Scanner input1 = new Scanner(System.in);
-        System.out.println("File Name: ");
-        Scanner input2 = new Scanner(System.in);
-        topos.writeJSON(input1.next(), input2.next());
+        System.out.print("Topology ID: ");
+        Scanner input = new Scanner(System.in);
+        String id = input.next();
+        System.out.print("File Name: ");
+        input = new Scanner(System.in);
+        String fileName = input.next();
+        topos.writeJSON(id, fileName);
     }
 
     private static void printTopologies() {
@@ -68,11 +72,31 @@ public class main {
     }
 
     private static void deleteTopology() {
-        System.out.println("Topology ID: ");
+        System.out.print("Topology ID: ");
         Scanner input = new Scanner(System.in);
         topos.deleteTopology(input.next());
     }
 
+    private static void getQueryDevices() {
+        System.out.print("Topology ID: ");
+        Scanner input = new Scanner(System.in);
+        List<HashMap<String, String>> device = (List<HashMap<String, String>>) topos.getDevices(input.next());
+        if (!device.isEmpty()) {
+            System.out.println(device);
+        } else
+            System.out.println("There is No Topology With this ID");
+    }
+
+    private static void getDevicesWithNetlistNode() {
+        System.out.print("Topology ID: ");
+        Scanner input = new Scanner(System.in);
+        String id = input.next();
+        System.out.print("Node Name: ");
+        input = new Scanner(System.in);
+        String node = input.next();
+        topos.getConnectedDevices(node, id);
+
+    }
 }
 
 
