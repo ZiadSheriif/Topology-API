@@ -18,10 +18,8 @@ public class Topologies {
     }
 
     void insertTopology(Topology topology) {
-//        System.out.println(topologies);
         for (Topology topo : topologies) {
             if (topo.getId().equals(topology.getId())) {
-//                System.out.println("Found");
                 return;
             }
         }
@@ -71,13 +69,11 @@ public class Topologies {
         int n = arrOfComponents.size();
         List<Component> components = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-//            System.out.println(topId);
-//            System.out.println(arrOfComponents.get(i));
+            System.out.println(arrOfComponents.get(i));
             components.add(createComponent(arrOfComponents, i));
         }
-//        System.out.println(components.size());
         Topology topo = new Topology(topId, components);
-//        System.out.println(topologies.size());
+        System.out.println(topo.getComponents());
         return topo;
 
     }
@@ -88,7 +84,6 @@ public class Topologies {
         Component comp;
         type = (String) components.get(index).get("type");
         id = (String) components.get(index).get("id");
-//        System.out.println(type + "  " + id);
         if (type.equals("resistor")) {
             JSONObject device1 = (JSONObject) components.get(index).get("resistance");
             mn = Double.parseDouble(device1.get("min").toString());
@@ -106,21 +101,75 @@ public class Topologies {
     }
 
     void writeJSON(String topId, String fileName) throws IOException {
-        FileWriter file = new FileWriter("C:/Users/20114/Desktop/Tasks/Task2/" + fileName + ".json");
+        FileWriter file = new FileWriter(fileName + ".json");
         JSONObject json = new JSONObject();
 
         // get id and getting each component in component list and convert it to string
-
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                json.put(topId, topology.getComponents());
-                return;
+                System.out.println(topology.getComponents().get(0).getType());
+                json.put(topId, convertComponentsToJson(topology.getComponents()));
+                break;
             }
         }
         file.write(json.toJSONString());
-        System.out.println("\nJSON Object: " + json);
         file.flush();
         file.close();
+    }
+
+    List<JSONObject> convertComponentsToJson(List<Component> componentList) {
+//        "components": [
+//        {
+//            "type": "resistor",
+//                "id": "res2",
+//                "resistance": {
+//            "default": 200,
+//                    "min": 20,
+//                    "max": 2000
+//        },
+//            "netlist": {
+//            "t1": "vdd",
+//                    "t2": "n1"
+//        }
+//        },
+//        {
+//            "type": "nmos",
+//                "id": "m1",
+//                "m(l)": {
+//            "default": 5.5,
+//                    "min": 3,
+//                    "max": 4
+//        },
+//            "netlist": {
+//            "drain": "n1",
+//                    "gate": "vin",
+//                    "source": "vss"
+//        }
+//        }
+//  ]
+        JSONObject jsonObject = null;
+        JSONObject defObj = null;
+        List<JSONObject> jsonList = new ArrayList<>();
+        String devVal, type;
+        for (Component component : componentList) {
+            type = component.getType();
+            if (type.equals("resistor")) {
+                devVal = "resistance";
+            } else
+                devVal = "m(l)";
+            jsonObject = new JSONObject();
+            defObj = new JSONObject();
+            defObj.put("default", component.getDefValue());
+            defObj.put("min", component.getMin());
+            defObj.put("max", component.getMax());
+            jsonObject.put(devVal, defObj);
+            jsonObject.put("type", type);
+            jsonObject.put("id", component.getId());
+            jsonObject.put("netlist", component.getMax());
+            jsonList.add(jsonObject);
+        }
+        System.out.println(jsonList);
+        return jsonList;
     }
 
     void printTopologiesID() {

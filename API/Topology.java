@@ -13,12 +13,8 @@ import java.util.List;
 
 public class Topology {
 
-    private  String id;
+    private String id;
     private List<Component> components;
-
-    Topology(String id) {
-        this.id = id;
-    }
 
     Topology(String id, List<Component> componentss) {
         this.id = id;
@@ -35,22 +31,7 @@ public class Topology {
     }
 
     void setComponents(final List<Component> components) {
-        Map<String, String> netlist;
-        Double maxval, minval, defval;
-        String id;
-        int size = components.size();
-        for (int i = 0; i < size; i++) {
-            maxval = components.get(i).getMax();
-            minval = components.get(i).getMin();
-            defval = components.get(i).getDefValue();
-            netlist = components.get(i).getNetList();
-            id = components.get(i).getId();
-            if (components.get(i) instanceof Nmos) {
-                components.add(new Nmos(id, minval, maxval, netlist, defval));
-            } else
-                components.add(new Resistor(id, netlist, minval, maxval, defval));
-
-        }
+        this.components = components;
     }
 
     final List<Component> getComponents() {

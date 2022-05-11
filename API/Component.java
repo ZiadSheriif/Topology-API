@@ -7,12 +7,12 @@ public class Component {
     protected double minValue, maxValue, defValue;
     protected Map<String, String> netList;
 
-    Component(String id, Double minValue, Double maxValue,Double defVal, Map<String, String> netList) {
+    Component(String id, Double minValue, Double maxValue, Double defVal, Map<String, String> netList) {
         this.id = id;
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.netList = netList;
-        this.defValue=defVal;
+        this.defValue = defVal;
     }
 
     //TODO: Setters and getters of Components Class
@@ -25,7 +25,7 @@ public class Component {
     }
 
     void setType(String type) {
-        this.type = type;
+        this.type=type;
     }
 
     void setMax(Double maxValue) {
@@ -51,19 +51,19 @@ public class Component {
     }
 
     final String getType() {
-        return type;
+        return this.type;
     }
 
     final Double getMax() {
-        return maxValue;
+        return this.maxValue;
     }
 
     final Double getMin() {
-        return minValue;
+        return this.minValue;
     }
 
     final Map<String, String> getNetList() {
-        return netList;
+        return this.netList;
     }
 
     final Double getDefValue() {
