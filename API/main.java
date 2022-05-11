@@ -52,8 +52,8 @@ public class main {
         if (!topology.getId().isEmpty()) {
             System.out.println("Read Successfully");
             topos.insertTopology(topology);
-            System.out.println(topos.getTopologies().size());
-        }
+        } else
+            System.out.println("Read Failed");
 
     }
 
@@ -94,7 +94,7 @@ public class main {
         System.out.print("Node Name: ");
         input = new Scanner(System.in);
         String node = input.next();
-        topos.getConnectedDevices(node, id);
+        List<Component> Components = (List<Component>) topos.getConnectedDevices(node, id);
 
     }
 }

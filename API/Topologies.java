@@ -44,7 +44,9 @@ public class Topologies {
     List<Component> getConnectedDevices(String node, String topId) {
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                return topology.getConnectedComponents(node);
+                System.out.println(topology.getConnectedComponents(node));
+                List<Component> tempComp = topology.getConnectedComponents(node);
+
             }
         }
         return null;
@@ -78,11 +80,9 @@ public class Topologies {
         int n = arrOfComponents.size();
         List<Component> components = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-//            System.out.println(arrOfComponents.get(i));
             components.add(createComponent(arrOfComponents, i));
         }
         Topology topo = new Topology(topId, components);
-        System.out.println(topo.getComponents());
         return topo;
 
     }
@@ -99,12 +99,18 @@ public class Topologies {
             mx = Double.parseDouble(device1.get("max").toString());
             defVal = Double.parseDouble(device1.get("default").toString());
             comp = new Resistor(id, (Map<String, String>) components.get(index).get("netlist"), mn, mx, defVal);
-        } else {
+        } else if (type.equals("nmos")) {
             JSONObject device2 = (JSONObject) components.get(index).get("m(l)");
             mn = Double.parseDouble(device2.get("min").toString());
             mx = Double.parseDouble(device2.get("max").toString());
             defVal = Double.parseDouble(device2.get("default").toString());
             comp = new Nmos(id, mn, mx, (Map<String, String>) components.get(index).get("netlist"), defVal);
+        } else {
+            JSONObject device2 = (JSONObject) components.get(index).get("m(l)");
+            mn = Double.parseDouble(device2.get("min").toString());
+            mx = Double.parseDouble(device2.get("max").toString());
+            defVal = Double.parseDouble(device2.get("default").toString());
+            comp = new Pmos(id, mn, mx, (Map<String, String>) components.get(index).get("netlist"), defVal);
         }
         return comp;
     }
@@ -161,9 +167,9 @@ public class Topologies {
         String devVal, type;
         for (Component component : componentList) {
             type = component.getType();
-            if (type.equals("resistor")) {
+            if (type.equals("resistor"))
                 devVal = "resistance";
-            } else
+            else
                 devVal = "m(l)";
             jsonObject = new JSONObject();
             defObj = new JSONObject();
