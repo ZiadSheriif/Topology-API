@@ -36,9 +36,9 @@ public class Topologies {
             }
         }
         if (done)
-            System.out.println("Topology With ID " + id + " has been Deleted Successfully\n");
+            System.out.println("Topology With ID " + id + " has been Deleted Successfully");
         else
-            System.out.println("Topology With ID " + id + " has been Failed to be Deleted\n");
+            System.out.println("Topology With ID " + id + " has been Failed to be Deleted");
     }
 
     List<Component> getConnectedDevices(String node, String topId) {
@@ -70,7 +70,7 @@ public class Topologies {
         return device;
     }
 
-    Topology readJSON(String fileName) throws IOException, ParseException {
+    void readJSON(String fileName, Topologies topos) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(fileName));
         JSONObject jsonObject = (JSONObject) obj;
@@ -83,7 +83,7 @@ public class Topologies {
             components.add(createComponent(arrOfComponents, i));
         }
         Topology topo = new Topology(topId, components);
-        return topo;
+        topos.insertTopology(topo);
 
     }
 
@@ -115,14 +115,15 @@ public class Topologies {
         return comp;
     }
 
-    void writeJSON(String topId, String fileName) throws IOException {
+    void writeJSON(String topId, String fileName, Topologies topos) throws IOException {
         FileWriter file = new FileWriter(fileName + ".json");
         JSONObject json = new JSONObject();
 
         // get id and getting each component in component list and convert it to string
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                json.put(topId, convertComponentsToJson(topology.getComponents()));
+                json.put("id", topId);
+                json.put("components", convertComponentsToJson(topology.getComponents()));
                 break;
             }
         }
@@ -179,10 +180,9 @@ public class Topologies {
             jsonObject.put(devVal, defObj);
             jsonObject.put("type", type);
             jsonObject.put("id", component.getId());
-            jsonObject.put("netlist", component.getMax());
+            jsonObject.put("netlist", component.getNetList());
             jsonList.add(jsonObject);
         }
-        System.out.println(jsonList);
         return jsonList;
     }
 

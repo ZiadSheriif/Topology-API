@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-public class main {
+public class Main {
     private static Topologies topos = new Topologies();
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -48,10 +48,9 @@ public class main {
     private static void readJson() throws IOException, ParseException {
         System.out.println("File Name: ");
         Scanner input = new Scanner(System.in);
-        Topology topology = topos.readJSON(input.next());
-        if (!topology.getId().isEmpty()) {
+        topos.readJSON(input.next(), topos);
+        if (!topos.getTopologies().isEmpty()) {
             System.out.println("Read Successfully");
-            topos.insertTopology(topology);
         } else
             System.out.println("Read Failed");
 
@@ -64,7 +63,7 @@ public class main {
         System.out.print("File Name: ");
         input = new Scanner(System.in);
         String fileName = input.next();
-        topos.writeJSON(id, fileName);
+        topos.writeJSON(id, fileName, topos);
     }
 
     private static void printTopologies() {
