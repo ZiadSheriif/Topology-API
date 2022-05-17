@@ -76,3 +76,7 @@ git clone https://github.com/ZiadSheriif/Topology-API
 </td>
 </tr>
  </table>
+
+## License <a name = "license"></a>
+
+> This software is licensed under MIT License, See [License](https://github.com/ZiadSheriif/Topology-API/blob/master/LICENSE) for more information ©ZiadSheriif.
