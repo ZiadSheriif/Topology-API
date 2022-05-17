@@ -46,7 +46,7 @@ public class Main {
 
     // TODO: handle case if empty
     private static void readJson() throws IOException, ParseException {
-        System.out.println("File Name: ");
+        System.out.println("File Name (name.json): ");
         Scanner input = new Scanner(System.in);
         topos.readJSON(input.next(), topos);
         if (!topos.getTopologies().isEmpty()) {
@@ -93,7 +93,7 @@ public class Main {
         System.out.print("Node Name: ");
         input = new Scanner(System.in);
         String node = input.next();
-        List<Component> Components = (List<Component>) topos.getConnectedDevices(node, id);
+        topos.getConnectedDevices(node, id,1);
 
     }
 }

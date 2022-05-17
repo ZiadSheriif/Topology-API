@@ -41,15 +41,27 @@ public class Topologies {
             System.out.println("Topology With ID " + id + " has been Failed to be Deleted");
     }
 
-    List<Component> getConnectedDevices(String node, String topId) {
+    boolean getConnectedDevices(String node, String topId, int num) {
+        boolean test = false;
         for (Topology topology : topologies) {
             if (topology.getId().equals(topId)) {
-                System.out.println(topology.getConnectedComponents(node));
                 List<Component> tempComp = topology.getConnectedComponents(node);
-
+                for (Component comp : tempComp) {
+                    List<String> tempKeys = comp.getNetList().keySet().stream().toList();
+                    for (String s : tempKeys) {
+                        if (comp.getNetList().get(s).equals(node)) {
+                            test = true;
+                            break;
+                        }
+                    }
+                }
+                if (num == 1) {
+                    List<JSONObject> obj = convertComponentsToJson(tempComp);
+                    System.out.println(obj);
+                }
             }
         }
-        return null;
+        return test;
     }
 
     List<HashMap<String, String>> getDevices(String topId) {

@@ -15,7 +15,7 @@ public class Testing {
         testWriteFile();
         testGetTopologies();
         testQueryDevices();
-//        testQueryDevicesWithNetlistNode();
+        testQueryDevicesWithNetlistNode();
         testDeleteTopologies();
     }
 
@@ -50,8 +50,8 @@ public class Testing {
 
     private static void testDeleteTopologies() {
         topos.deleteTopology("top1");
-        List<Topology> set = topos.getTopologies();
-        if (set.contains("top1")) {
+        List<Topology> myList = topos.getTopologies();
+        if (myList.contains("top1")) {
             System.out.println("Testing deleteTopologies Failed");
         } else {
             System.out.println("Testing deleteTopologies Succeeded");
@@ -69,11 +69,11 @@ public class Testing {
     }
 
     private static void testQueryDevicesWithNetlistNode() {
-        List<Component> list = topos.getConnectedDevices("top1", "n1");
-//        if (list.contains(new Component("res1","resistor"))&&list.contains(new Component("m1","nmos"))) {
-//            System.out.println("Testing queryDevicesWithNetlistNode Succeeded");
-//        } else {
-//            System.out.println("Testing queryDevicesWithNetlistNode Succeeded");
-//        }
+        boolean got = topos.getConnectedDevices("n1", "top1",0);
+        if (got) {
+            System.out.println("Testing queryDevicesWithNetlistNode Succeeded");
+        } else {
+            System.out.println("Testing queryDevicesWithNetlistNode Failed");
+        }
     }
 }
