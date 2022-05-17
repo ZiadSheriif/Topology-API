@@ -48,8 +48,8 @@ git clone https://github.com/ZiadSheriif/Topology-API
 ![start](screenshots/Screenshot2.png)
 ![start](screenshots/Screenshot3.png)
 
-#### Output File
-![start](screenshots/Screenshot4.png)
+<!-- #### Output File
+![start](screenshots/Screenshot4.png) -->
 
 #### Read JSON file & Query Topologies
 ![start](screenshots/Screenshot5.png)
