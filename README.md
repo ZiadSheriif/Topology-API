@@ -10,8 +10,7 @@
 [![license](https://img.shields.io/pypi/l/ansicolortags.svg)](LICENSE)
 [![forks](https://img.shields.io/github/forks/ZiadSheriif/Topology-API)](https://github.com/ZiadSheriif/Topology-API/network)
 [![stars](https://img.shields.io/github/stars/ZiadSheriif/Topology-API)](https://github.com/ZiadSheriif/Topology-API/stargazers)
-
-[//]: # ([![issues]&#40;https://img.shields.io/github/issues/ZiadSheriif/Topology-API&#41;]&#40;https://github.com/ZiadSheriif/Topology-API/issues&#41;)
+[![issues](https://img.shields.io/github/issues/ZiadSheriif/Topology-API)](https://github.com/ZiadSheriif/Topology-API/issues)
 
 </div>
 
